@@ -26,12 +26,12 @@ jobs:
           - DOCKERFILE_PATH: Dockerfile
             ALPINE_VERSION: 3.14
             DOCKER_BUILD_TARGET: app
-            DOCKER_TAG_ONLY: v0.43.0
+            DOCKER_TAG_ONLY: "v0.42.0"
             IAMLIVE_VERSION: "v0.42.0"
           - DOCKERFILE_PATH: Dockerfile
             ALPINE_VERSION: 3.14
             DOCKER_BUILD_TARGET: app
-            DOCKER_TAG_ONLY: v0.43.0
+            DOCKER_TAG_ONLY: "v0.43.0"
             IAMLIVE_VERSION: "v0.43.0"
     steps:
       - uses: actions/checkout@v2
