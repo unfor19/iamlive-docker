@@ -113,7 +113,7 @@ jobs:
           ORG_NAME=iann0036
           REPO_NAME=iamlive
           IAMLIVE_VERSION=$(curl -s https://api.github.com/repos/${ORG_NAME}/${REPO_NAME}/releases/latest | grep "tag_name" | cut -d'v' -f2 | cut -d'"' -f1)
-          echo ::set-output name=iamlive_version::${IAMLIVE_VERSION}
+          echo ::set-output name=iamlive_version::v${IAMLIVE_VERSION}
           echo "Will push IAMLIVE_VERSION: ${IAMLIVE_VERSION}"
           set +x
       - name: Set up Docker Buildx
