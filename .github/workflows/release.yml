@@ -88,3 +88,70 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+  docker-latest:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        include:
+          - DOCKERFILE_PATH: Dockerfile
+            ALPINE_VERSION: 3.14
+            DOCKER_BUILD_TARGET: app
+            DOCKER_TAG_ONLY: "latest"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Prepare
+        id: prepare
+        run: |
+          set -x
+          DOCKER_ORG_REPO="${DOCKER_ORG}/${DOCKER_REPO}"
+          echo ::set-output name=docker_org_repo::${DOCKER_ORG_REPO}
+          DOCKER_TAG_LATEST=${DOCKER_ORG_REPO}:${{ matrix.DOCKER_TAG_ONLY }}
+          echo ::set-output name=docker_tag_latest::${DOCKER_TAG_LATEST}
+          ORG_NAME=iann0036
+          REPO_NAME=iamlive
+          IAMLIVE_VERSION=$(curl -s https://api.github.com/repos/${ORG_NAME}/${REPO_NAME}/releases/latest | grep "tag_name" | cut -d'v' -f2 | cut -d'"' -f1)
+          echo ::set-output name=iamlive_version::${IAMLIVE_VERSION}
+          echo "Downloaded ${IAMLIVE_VERSION}"
+          set +x
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@master
+        with:
+          install: true
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ env.PURGE_CACHE }}-${{ matrix.DOCKER_BUILD_TARGET }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-${{ env.PURGE_CACHE }}-${{ matrix.DOCKER_BUILD_TARGET }}-
+      - name: Build Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ env.DOCKER_BUILD_CONTEXT }}
+          platforms: linux/amd64
+          builder: ${{ steps.buildx.outputs.name }}
+          file: ${{ matrix.Dockerfile }}
+          build-args: |
+            IAMLIVE_VERSION=${{ matrix.IAMLIVE_VERSION }}
+            ALPINE_VERSION=${{ steps.prepare.iamlive_version }}
+          target: ${{ matrix.DOCKER_BUILD_TARGET }}
+          push: false
+          tags: |
+            ${{ steps.prepare.outputs.docker_tag_latest }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+          load: true
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Push to DockerHub
+        run: |
+          docker image push --all-tags ${{ steps.prepare.outputs.docker_org_repo }}
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache

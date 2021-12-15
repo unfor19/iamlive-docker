@@ -10,7 +10,7 @@ FROM alpine:${ALPINE_VERSION} AS base
 RUN apk --update upgrade && \
     apk add --update ca-certificates && \
     update-ca-certificates
- 
+
 # Download iamlive binary from GitHub
 FROM base as download
 ARG IAMLIVE_VERSION
