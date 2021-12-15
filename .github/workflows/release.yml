@@ -112,7 +112,7 @@ jobs:
           REPO_NAME=iamlive
           IAMLIVE_VERSION=$(curl -s https://api.github.com/repos/${ORG_NAME}/${REPO_NAME}/releases/latest | grep "tag_name" | cut -d'v' -f2 | cut -d'"' -f1)
           echo ::set-output name=iamlive_version::${IAMLIVE_VERSION}
-          echo "Downloaded ${IAMLIVE_VERSION}"
+          echo "Will push IAMLIVE_VERSION: ${IAMLIVE_VERSION}"
           set +x
       - name: Set up Docker Buildx
         id: buildx
@@ -134,8 +134,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: ${{ matrix.Dockerfile }}
           build-args: |
-            IAMLIVE_VERSION=${{ matrix.IAMLIVE_VERSION }}
-            ALPINE_VERSION=${{ steps.prepare.iamlive_version }}
+            IAMLIVE_VERSION=${{ steps.prepare.iamlive_version }}
+            ALPINE_VERSION=${{ matrix.ALPINE_VERSION }}
           target: ${{ matrix.DOCKER_BUILD_TARGET }}
           push: false
           tags: |
