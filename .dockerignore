@@ -1,11 +1,1 @@
 **
-!LICENSE
-!service/
-!vendor/
-!.gon-*.json
-!map.json
-!iam_definition.json
-!*.go
-!*.mod
-!*.sum
-!iamlivecore # Fixes "main.go:6:2: cannot find package "." in: /go/src/iamlive/iamlivecore The command '/bin/sh -c go install' returned a non-zero code: 1"
