@@ -5,6 +5,8 @@ on:
       - master
     paths-ignore:
       - README.md
+  schedule:
+    - cron: "0 0 1,15 * *"
 
   workflow_dispatch:
 
