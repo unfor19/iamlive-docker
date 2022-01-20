@@ -1,7 +1,7 @@
 ARG GO_VERSION=1.16.3
 ARG ALPINE_VERSION=3.14
 ARG IAMLIVE_VERSION=v0.43.0
- 
+
 # Base image
 FROM alpine:${ALPINE_VERSION} AS base
 RUN apk --update upgrade && \
