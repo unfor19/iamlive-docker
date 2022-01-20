@@ -8,6 +8,11 @@ Run [iamlive](https://github.com/iann0036/iamlive) as a Docker container.
 To read more about how iamlive works, see [Determining AWS IAM Policies According To Terraform And AWS CLI
 ](https://meirg.co.il/2021/04/23/determining-aws-iam-policies-according-to-terraform-and-aws-cli/)
 
+## Requirements
+
+1. [AWS Account Credentials Configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
+2. [Docker](https://docs.docker.com/get-docker/)
+3. (Optional) To test that it works, you'll need [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) or any other tool that makes requests to AWS, such as [Terraform CLI](https://www.terraform.io/downloads)
 ## Getting Started
 
 1. Git clone this repo
