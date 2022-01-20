@@ -1,5 +1,8 @@
 # iamlive-docker
 
+[![Push latest version to DockerHub](https://github.com/unfor19/iamlive-docker/actions/workflows/release.yml/badge.svg)](https://github.com/unfor19/iamlive-docker/actions/workflows/release.yml) [![Dockerhub pulls](https://img.shields.io/docker/pulls/unfor19/iamlive-docker)](https://hub.docker.com/r/unfor19/iamlive-docker)
+
+
 Run [iamlive](https://github.com/iann0036/iamlive) as a Docker container.
 
 To read more about how iamlive works, see [Determining AWS IAM Policies According To Terraform And AWS CLI
