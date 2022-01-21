@@ -28,13 +28,13 @@ jobs:
           - DOCKERFILE_PATH: Dockerfile
             ALPINE_VERSION: 3.14
             DOCKER_BUILD_TARGET: app
-            DOCKER_TAG_ONLY: "v0.42.0"
-            IAMLIVE_VERSION: "v0.42.0"
-          - DOCKERFILE_PATH: Dockerfile
-            ALPINE_VERSION: 3.14
-            DOCKER_BUILD_TARGET: app
             DOCKER_TAG_ONLY: "v0.43.0"
             IAMLIVE_VERSION: "v0.43.0"
+          - DOCKERFILE_PATH: Dockerfile
+            ALPINE_VERSION: 3.14
+            DOCKER_BUILD_TARGET: lambda
+            DOCKER_TAG_ONLY: "lambda-v0.44.0"
+            IAMLIVE_VERSION: "v0.44.0"
     steps:
       - uses: actions/checkout@v2
       - name: Prepare
@@ -100,6 +100,10 @@ jobs:
             ALPINE_VERSION: 3.14
             DOCKER_BUILD_TARGET: app
             DOCKER_TAG_ONLY: "latest"
+          - DOCKERFILE_PATH: Dockerfile
+            ALPINE_VERSION: 3.14
+            DOCKER_BUILD_TARGET: lambda
+            DOCKER_TAG_ONLY: "lambda-latest"
     steps:
       - uses: actions/checkout@v2
       - name: Prepare
