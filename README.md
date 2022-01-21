@@ -15,22 +15,25 @@ To read more about how iamlive works, see [Determining AWS IAM Policies Accordin
 3. (Optional) To test that it works, you'll need [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) or any other tool that makes requests to AWS, such as [Terraform CLI](https://www.terraform.io/downloads)
 ## Getting Started
 
-1. Git clone this repo
-2. Build the Docker image
+1. Git clone this repo, **or** [curl](https://curl.se/) relevant files
+   ```
+   curl -sL --remote-name-all https://raw.githubusercontent.com/unfor19/iamlive-docker/master/{Dockerfile,Makefile}
+   ```
+2. **Terminal #1**: Build the Docker image
    ```bash
    make build
    ```
-3. **Terminal #1**: Run the Docker image for the first time
+3. **Terminal #2**: Run the Docker image for the first time
     ```bash
     make run
     # Runs in the background ...
     # Average Memory Usage: 88MB
     ```
-4. **Terminal #2**: Copy CA certificate from the container to host; In any case, do not remove the `iamlive` container. This will keep the `ca.pem` valid for future runs, so this step will be skipped in future runs.
+4. **Terminal #1**: Copy CA certificate from the container to host; To keep `ca.pem` valid for future runs, **do not remove** the `iamlive-docker` container.
     ```bash
     make copy
     ```
-5. **Terminal #2**: Set environment variables
+5. **Terminal #1**: Set environment variables
    ```bash
     export AWS_ACCESS_KEY_ID="MY_AWS_ACCESS_KEY_ID"
     export AWS_SECRET_ACCESS_KEY="MY_AWS_SECRET_ACCESS_KEY"
@@ -40,12 +43,12 @@ To read more about how iamlive works, see [Determining AWS IAM Policies Accordin
         HTTPS_PROXY=http://127.0.0.1:443 \
         AWS_CA_BUNDLE="${HOME}/.iamlive/ca.pem"
    ```
-6. **Terminal #2**: Test it by making calls to AWS, using the CLI is the easiest way
+6. **Terminal #1**: Test it by making calls to AWS, using the CLI is the easiest way
    ```bash
    aws s3 ls
    ```
 
-   **Terminal #1**: iamlive output after `aws s3 ls`
+   **Terminal #2**: iamlive output after `aws s3 ls`
    ```json
     {
         "Version": "2012-10-17",
@@ -64,11 +67,11 @@ To read more about how iamlive works, see [Determining AWS IAM Policies Accordin
    ```bash
    make stop
    ```
-8. **Terminal #1**: Start iamlive container again (no need to invoke `make copy`)
+8. **Terminal #2**: Start iamlive container again (no need to invoke `make copy`)
    ```bash
    make start
    ```
-9. **Terminal #2**: Do your thing ;)
+9.  **Terminal #1**: Do your thing ;)
 ## Authors
 
 Created and maintained by [Meir Gabay](https://github.com/unfor19)
