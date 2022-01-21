@@ -25,7 +25,7 @@ run:                                  ## Run iamlive container for the first tim
         -it "$(_DOCKER_FULL_TAG)"
 
 genca:                                ## Generate CA cert+key locally
-	@./scripts/generate_ca.sh
+	@./generate_ca.sh
 
 run-ca: genca                         ## Run iamlive-docker container for the first time with pre-generated CA cert+key
 	docker run -p 80:10080 \
