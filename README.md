@@ -11,13 +11,17 @@ To read more about how iamlive works, see [Determining AWS IAM Policies Accordin
 ## Requirements
 
 1. [AWS Account Credentials Configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
-2. [Docker](https://docs.docker.com/get-docker/)
-3. (Optional) To test that it works, you'll need [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) or any other tool that makes requests to AWS, such as [Terraform CLI](https://www.terraform.io/downloads)
+1. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+1. [Docker](https://docs.docker.com/get-docker/)
+
 ## Getting Started
+
+### Run iamlive
 
 1. Git clone this repo, **or** [curl](https://curl.se/) relevant files
    ```
-   curl -sL --remote-name-all https://raw.githubusercontent.com/unfor19/iamlive-docker/master/{Dockerfile,Makefile}
+   curl -L --remote-name-all https://raw.githubusercontent.com/unfor19/iamlive-docker/master/{Dockerfile,Makefile,/scripts/generate_ca.sh} && \
+   chmod +x generate_ca.sh
    ```
 2. **Terminal #1**: Build the Docker image
    ```bash
@@ -33,17 +37,34 @@ To read more about how iamlive works, see [Determining AWS IAM Policies Accordin
     ```bash
     make copy
     ```
-5. **Terminal #1**: Set environment variables
-   ```bash
-    export AWS_ACCESS_KEY_ID="MY_AWS_ACCESS_KEY_ID"
-    export AWS_SECRET_ACCESS_KEY="MY_AWS_SECRET_ACCESS_KEY"
-    # export AWS_PROFILE="MY_AWS_PROFILE"
+
+### Proxy IAM Requests Through iamlive
+
+1. **Terminal #1**: Set AWS credentials
+    ```bash
+    export AWS_PROFILE=MY_AWS_PROFILE
+    ```
+
+    **OR**
+    ```bash
+    export AWS_ACCESS_KEY_ID=MY_AWS_ACCESS_KEY_ID
+    ```
+    ```bash
+    export AWS_SECRET_ACCESS_KEY=MY_AWS_SECRET_ACCESS_KEY
+    ```
+1. **Terminal #1**: Set required environment variables [HTTP_PROXY, HTTPS_PROXY](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-proxy.html) and [AWS_CA_BUNDLE](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html#envvars-list)
+    ```bash
     export \
         HTTP_PROXY=http://127.0.0.1:80 \
-        HTTPS_PROXY=http://127.0.0.1:443 \
-        AWS_CA_BUNDLE="${HOME}/.iamlive/ca.pem"
-   ```
-6. **Terminal #1**: Test it by making calls to AWS, using the CLI is the easiest way
+        HTTPS_PROXY=http://127.0.0.1:443
+    ```
+    
+    **AND**
+
+    ```bash
+    export AWS_CA_BUNDLE="${HOME}/.iamlive/ca.pem"
+    ```
+1. **Terminal #1**: Test it by making calls to AWS, using the CLI is the easiest way
    ```bash
    aws s3 ls
    ```
@@ -63,15 +84,15 @@ To read more about how iamlive works, see [Determining AWS IAM Policies Accordin
         ]
     }   
    ```
-7. **Terminal #1**: Stop the iamlive container
+1. **Terminal #1**: Stop the iamlive container
    ```bash
    make stop
    ```
-8. **Terminal #2**: Start iamlive container again (no need to invoke `make copy`)
+1. **Terminal #2**: Start iamlive container again (no need to invoke `make copy`)
    ```bash
    make start
    ```
-9.  **Terminal #1**: Do your thing ;)
+1.  **Terminal #1**: Do your thing again ;)
 ## Authors
 
 Created and maintained by [Meir Gabay](https://github.com/unfor19)
