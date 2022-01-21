@@ -5,6 +5,7 @@ _DOCKER_FULL_TAG=$(_DOCKER_IMAGE):$(_DOCKER_TAG)
 _DOCKER_LAMBDA_FULL_TAG=$(_DOCKER_IMAGE):lambda-$(_DOCKER_TAG)
 _DOCKER_CONTAINER_NAME=iamlive-docker
 _DOCKER_LAMBDA_CONTAINER_NAME=$(_DOCKER_CONTAINER_NAME)-lambda
+_ALPINECI_FULL_TAG=unfor19/alpine-ci:latest-7437025b
 _CA_DIR=${PWD}/.certs
 
 help:                                 ## Available make commands
@@ -25,7 +26,9 @@ run:                                  ## Run iamlive container for the first tim
         -it "$(_DOCKER_FULL_TAG)"
 
 genca:                                ## Generate CA cert+key locally
-	@./generate_ca.sh
+	@if [ ! -d "$(_CA_DIR)" ]; then \
+		docker run -i --rm -v ${PWD}:/src/ --workdir /src/ --entrypoint ./generate_ca.sh $(_ALPINECI_FULL_TAG); \
+	fi
 
 run-ca: genca                         ## Run iamlive-docker container for the first time with pre-generated CA cert+key
 	docker run -p 80:10080 \
