@@ -15,7 +15,20 @@ build:               ## Build Docker image and compile
 run:                 ## Run iamlive container for the first time
 	docker run -p 80:10080 \
         -p 443:10080 \
-        --name iamlive-docker \
+        --name "$(_DOCKER_CONTAINER_NAME)" \
+        -it "$(_DOCKER_FULL_TAG)" \
+        --mode proxy \
+        --bind-addr 0.0.0.0:10080 \
+        --force-wildcard-resource \
+        --output-file "/app/iamlive.log"
+
+
+run-ca:              ## Run iamlive container for the first time with pre-generated CA
+	./scripts/generate_ca.sh && \
+	docker run -p 80:10080 \
+        -p 443:10080 \
+		-v ${PWD}/.certs:/home/appuser/.iamlive/ \
+        --name "$(_DOCKER_CONTAINER_NAME)" \
         -it "$(_DOCKER_FULL_TAG)" \
         --mode proxy \
         --bind-addr 0.0.0.0:10080 \
