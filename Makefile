@@ -17,7 +17,6 @@ build:                                ## Build Docker image and compile
 run:                                  ## Run iamlive container for the first time
 	docker run -p 80:10080 \
         -p 443:10080 \
-		--entrypoint sh \
         --name "$(_DOCKER_CONTAINER_NAME)" \
         -it "$(_DOCKER_FULL_TAG)"
 
