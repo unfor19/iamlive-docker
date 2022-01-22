@@ -8,7 +8,8 @@ _RESPONSE="$(aws ssm get-parameter --name "${AWS_CA_PARAMETER_NAME:-"/iamlive-do
     --output text \
     --query Parameter.Value || true)"
 if [[ "$_RESPONSE" =~ "-----BEGIN CERTIFICATE-----" ]]; then
-    echo "$_RESPONSE" > ca.pem
+    mkdir -p /certs
+    echo "$_RESPONSE" > /certs/ca.pem
 else
     echo "$_RESPONSE"
     exit 1
