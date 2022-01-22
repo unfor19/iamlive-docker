@@ -64,7 +64,7 @@ jobs:
           context: ${{ env.DOCKER_BUILD_CONTEXT }}
           platforms: linux/amd64
           builder: ${{ steps.buildx.outputs.name }}
-          file: ${{ matrix.Dockerfile }}
+          file: ${{ matrix.DOCKERFILE_PATH }}
           build-args: |
             IAMLIVE_VERSION=${{ matrix.IAMLIVE_VERSION }}
             ALPINE_VERSION=${{ matrix.ALPINE_VERSION }}
