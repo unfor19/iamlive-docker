@@ -29,13 +29,3 @@ USER "appuser"
 EXPOSE 10080
 ENTRYPOINT [ "/app/iamlive" , "--output-file", "/app/iamlive.log", "--mode", "proxy", "--bind-addr", "0.0.0.0:10080"]
 CMD [ "--force-wildcard-resource" ]
-
-
-# Lambda custom runtime - https://docs.aws.amazon.com/lambda/latest/dg/go-image.html#go-image-other
-FROM public.ecr.aws/lambda/provided:al2 as lambda
-USER root
-WORKDIR /app/
-COPY --from=download "/downloads/iamlive" ./
-EXPOSE 10080
-ENTRYPOINT [ "/app/iamlive" , "--output-file", "/app/iamlive.log", "--mode", "proxy", "--bind-addr", "0.0.0.0:10080"]
-CMD [ "--force-wildcard-resource" ]
