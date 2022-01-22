@@ -20,7 +20,7 @@ To read more about how iamlive works, see [Determining AWS IAM Policies Accordin
 
 1. Git clone this repo, **or** [curl](https://curl.se/) relevant files
    ```
-   curl -L --remote-name-all https://raw.githubusercontent.com/unfor19/iamlive-docker/master/{Dockerfile,dockerignore,Makefile,entrypoint.sh,generate_ca.sh} && \
+   curl -L --remote-name-all https://raw.githubusercontent.com/unfor19/iamlive-docker/master/{Dockerfile,.dockerignore,Makefile,entrypoint.sh,generate_ca.sh} && \
    chmod +x entrypoint.sh generate_ca.sh
    ```
 2. **Terminal #1**: Build the Docker image
