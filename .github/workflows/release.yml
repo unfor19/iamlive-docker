@@ -30,6 +30,9 @@ jobs:
             DOCKER_BUILD_TARGET: app
             DOCKER_TAG_ONLY: "v0.44.0"
             IAMLIVE_VERSION: "v0.44.0"
+          - DOCKERFILE_PATH: Dockerfile.ecs.init
+            DOCKER_BUILD_TARGET: app
+            DOCKER_TAG_ONLY: "ecs-init"
     steps:
       - uses: actions/checkout@v2
       - name: Prepare
