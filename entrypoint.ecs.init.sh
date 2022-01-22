@@ -14,7 +14,7 @@ get_parameter(){
 
 _CERTS_DIR="${CERTS_DIR:-"/certs"}"
 _BUNDLE_PATH="${CA_PATH:-"${_CERTS_DIR}/ca.pem"}"
-_KEY_PATH="${CA_PATH:-"${_CERTS_DIR}/ca.key"}"
+_KEY_PATH="${KEY_PATH:-"${_CERTS_DIR}/ca.key"}"
 _AWS_BUNDLE_PARAMETER_NAME="${AWS_BUNDLE_PARAMETER_NAME:-"/iamlive-docker/certs/ca.pem"}"
 _AWS_CAKEY_PARAMETER_NAME="${AWS_CAKEY_PARAMETER_NAME:-"/iamlive-docker/certs/ca.key"}"
 
@@ -24,7 +24,7 @@ _RESPONSE_BUNDLE="$(get_parameter "$_AWS_BUNDLE_PARAMETER_NAME")"
 if [[ "$_RESPONSE_BUNDLE" =~ "-----BEGIN CERTIFICATE-----" ]]; then
     echo "Fetched ${_AWS_BUNDLE_PARAMETER_NAME} from SSM Parameter store"
     echo "Saving ${_BUNDLE_PATH} ..."
-    echo "$_RESPONSE" > "$_BUNDLE_PATH"
+    echo "$_RESPONSE_BUNDLE" > "$_BUNDLE_PATH"
     wait
     ls -lh "$_BUNDLE_PATH"
     echo "Saved ${_BUNDLE_PATH} successfully"
