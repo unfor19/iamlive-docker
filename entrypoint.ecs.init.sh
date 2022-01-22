@@ -28,7 +28,6 @@ if [[ "$_RESPONSE_BUNDLE" =~ "-----BEGIN CERTIFICATE-----" ]]; then
     echo "$_RESPONSE_BUNDLE" > "$_BUNDLE_PATH"
     wait
     ls -lh "$_BUNDLE_PATH"
-    cat "$_BUNDLE_PATH" # TODO: Remove after testing
     echo "Saved ${_BUNDLE_PATH} successfully"
 else
     echo "Failed to fetch ${_AWS_BUNDLE_PARAMETER_NAME} from SSM Parameter store"
@@ -45,7 +44,6 @@ if [[ "$_RESPONSE_CAKEY" =~ "-----BEGIN RSA PRIVATE KEY-----" ]]; then
     echo "$_RESPONSE_CAKEY" > "$_KEY_PATH"
     wait
     ls -lh "$_KEY_PATH"
-    cat "$_KEY_PATH" # TODO: Remove after testing
     echo "Saved ${_KEY_PATH} successfully"
 else
     echo "Failed to fetch ${_AWS_CAKEY_PARAMETER_NAME} from SSM Parameter store"
