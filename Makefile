@@ -20,6 +20,14 @@ run:                                  ## Run iamlive container for the first tim
         --name "$(_DOCKER_CONTAINER_NAME)" \
         -it "$(_DOCKER_FULL_TAG)"
 
+run-dev:                              ## Run iamlive and exec into it
+	docker run -p 80:10080 \
+        -p 443:10080 \
+		--entrypoint bash \
+        --name "$(_DOCKER_CONTAINER_NAME)" \
+        -it "$(_DOCKER_FULL_TAG)"
+
+
 genca:                                ## Generate CA cert+key locally
 	@if [ ! -d "$(_CA_DIR)" ]; then \
 		docker run -i --rm -v ${PWD}:/src/ --workdir /src/ --entrypoint ./generate_ca.sh $(_ALPINECI_FULL_TAG); \
