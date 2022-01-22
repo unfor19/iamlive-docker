@@ -1,0 +1,5 @@
+FROM unfor19/alpine-ci:awscli-latest-aef23938 as app
+WORKDIR /src/
+COPY entrypoint.ecs.init.sh /src/
+ENV AWS_CA_PARAMETER_NAME=/iamlive-docker/certs/ca.pem
+ENTRYPOINT [ "/src/entrypoint.ecs.init.sh" ]
