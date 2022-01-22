@@ -31,7 +31,7 @@ if [[ "$_RESPONSE_BUNDLE" =~ "-----BEGIN CERTIFICATE-----" ]]; then
     cat "$_BUNDLE_PATH" # TODO: Remove after testing
     echo "Saved ${_BUNDLE_PATH} successfully"
 else
-    echo "Failed to fetched ca.pem from SSM Parameter store"
+    echo "Failed to fetch ${_AWS_BUNDLE_PARAMETER_NAME} from SSM Parameter store"
     echo "$_RESPONSE"
     exit 1
 fi
