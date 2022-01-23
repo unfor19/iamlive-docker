@@ -2,6 +2,7 @@
 _DOCKER_IMAGE=unfor19/iamlive-docker
 _DOCKER_TAG=latest
 _DOCKER_FULL_TAG=$(_DOCKER_IMAGE):$(_DOCKER_TAG)
+_DOCKER_ECS_INIT_FULL_TAG=$(_DOCKER_IMAGE):ecs-init-$(_DOCKER_TAG)
 _DOCKER_CONTAINER_NAME=iamlive-docker
 _ALPINECI_FULL_TAG=unfor19/alpine-ci:latest-7437025b
 _CA_DIR=${PWD}/.certs
@@ -13,6 +14,9 @@ usage: help
 
 build:                                ## Build Docker image and compile
 	docker build -t "$(_DOCKER_FULL_TAG)" --target app .
+
+build-ecs-init:                       ## Build ECS init Docker image and compile
+	docker build --file Dockerfile.ecs.init -t "$(_DOCKER_ECS_INIT_FULL_TAG)" --target app .
 
 run:                                  ## Run iamlive container for the first time
 	docker run -p 80:10080 \
