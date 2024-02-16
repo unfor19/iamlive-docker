@@ -3,9 +3,9 @@
 set -e
 set -o pipefail
 
-_FORMAT_LOGS="${FORMAT_LOGS:-"true"}"
-_ALLOWED_ADDRESS="${ALLOWED_ADDRESS:-"0.0.0.0"}"
-_OUTPUT_PATH="${OUTPUT_PATH:-"/app/iamlive.log"}"
+_FORMAT_LOGS="${FORMAT_LOGS}"
+_ALLOWED_ADDRESS="${ALLOWED_ADDRESS}"
+_OUTPUT_PATH="${OUTPUT_PATH}"
 
 if [[ "$_FORMAT_LOGS" = "true" ]]; then
     /app/iamlive --output-file "${_OUTPUT_PATH}" \
